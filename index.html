@@ -16,8 +16,10 @@
       --ink:     #111110;
       --muted:   #6B6B68;
       --rule:    #E5E5E2;
+      --ghost:   #DADAD5;
       --accent:  #0a84e8;        /* ← 改这里换强调色 */
       --accent-light: #ebf9ff;
+      --nav-bg: rgba(250,250,248,0.88);
       --serif:   'Playfair Display', Georgia, serif;
       --sans:    'Plus Jakarta Sans', system-ui, sans-serif;
       --radius:  12px;
@@ -40,7 +42,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      background: rgba(250,250,248,0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--rule);
       display: flex; align-items: center;
@@ -141,7 +143,7 @@
       font-style: italic;
       font-weight: 400;
       line-height: 1;
-      color: var(--rule);
+      color: var(--ghost);
       margin-bottom: 0.5rem;
       user-select: none;
     }
@@ -289,6 +291,26 @@
       font-size: 0.8rem; color: var(--muted);
     }
     footer strong { color: var(--ink); }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #0c0f14;
+        --surface: #161c25;
+        --ink: #f4f1ea;
+        --muted: #a8b1bf;
+        --rule: #2a3442;
+        --ghost: rgba(244, 241, 234, 0.16);
+        --accent: #78c4ff;
+        --accent-light: rgba(120, 196, 255, 0.14);
+        --nav-bg: rgba(12,15,20,0.84);
+      }
+
+      body { background: var(--bg); color: var(--ink); }
+      .nav-links a:hover { background: rgba(244, 241, 234, 0.08); }
+      .card:hover { box-shadow: 0 14px 36px rgba(0,0,0,0.32); }
+      .embed-box { background: rgba(255,255,255,0.02); }
+    }
 
     @media (max-width: 1099px) {
       .phase {
