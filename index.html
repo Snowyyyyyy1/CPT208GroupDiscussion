@@ -21,7 +21,8 @@
       --serif:   'Playfair Display', Georgia, serif;
       --sans:    'Plus Jakarta Sans', system-ui, sans-serif;
       --radius:  12px;
-      --max-w:   900px;
+      --shell-max: 1280px;
+      --reading-max: 760px;
       --nav-h:   64px;
     }
 
@@ -76,7 +77,7 @@
       padding-bottom: 5rem;
       padding-left: clamp(1.5rem, 5vw, 4rem);
       padding-right: clamp(1.5rem, 5vw, 4rem);
-      max-width: var(--max-w);
+      max-width: var(--shell-max);
       margin: 0 auto;
     }
     .hero-tag {
@@ -114,7 +115,7 @@
 
     /* ── DIVIDER ──────────────────────────────── */
     .section-divider {
-      width: 100%; max-width: var(--max-w);
+      width: 100%; max-width: var(--shell-max);
       margin: 0 auto;
       padding: 0 clamp(1.5rem, 5vw, 4rem);
     }
@@ -122,16 +123,12 @@
 
     /* ── PHASE SECTION ────────────────────────── */
     .phase {
-      max-width: var(--max-w);
+      max-width: var(--shell-max);
       margin: 0 auto;
       padding: 4.5rem clamp(1.5rem, 5vw, 4rem);
       display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 3rem;
-    }
-    @media (max-width: 680px) {
-      .phase { grid-template-columns: 1fr; gap: 1.5rem; }
-      .nav-links { display: none; }
+      grid-template-columns: clamp(140px, 14vw, 180px) minmax(0, 1fr);
+      gap: clamp(2.25rem, 4vw, 4rem);
     }
     .phase-label {
       position: sticky;
@@ -155,6 +152,10 @@
       text-transform: uppercase;
       color: var(--accent);
     }
+    .phase-body { min-width: 0; }
+    .phase-body > :is(h2, p, .insight-quote, h3) {
+      max-width: var(--reading-max);
+    }
     .phase-body h2 {
       font-family: var(--serif);
       font-size: 1.9rem;
@@ -173,7 +174,7 @@
     /* ── CARD GRID ────────────────────────────── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
       gap: 1rem;
       margin-top: 1.75rem;
     }
@@ -239,7 +240,6 @@
       gap: 1rem;
       margin-top: 1.5rem;
     }
-    @media (max-width: 540px) { .reflect-grid { grid-template-columns: 1fr; } }
     .reflect-item {
       background: var(--surface);
       border: 1px solid var(--rule);
@@ -255,7 +255,9 @@
 
     /* ── TEAM ─────────────────────────────────── */
     .team-grid {
-      display: flex; flex-wrap: wrap; gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: 1rem;
       margin-top: 1.5rem;
     }
     .team-card {
@@ -280,13 +282,57 @@
     footer {
       border-top: 1px solid var(--rule);
       padding: 2rem clamp(1.5rem, 5vw, 4rem);
-      max-width: var(--max-w); margin: 0 auto;
+      max-width: var(--shell-max); margin: 0 auto;
       display: flex; flex-wrap: wrap;
       justify-content: space-between; align-items: center;
       gap: 1rem;
       font-size: 0.8rem; color: var(--muted);
     }
     footer strong { color: var(--ink); }
+
+    @media (max-width: 1099px) {
+      .phase {
+        grid-template-columns: 120px minmax(0, 1fr);
+        gap: 2rem;
+      }
+      .phase-num { font-size: 2.6rem; }
+    }
+
+    @media (max-width: 680px) {
+      .phase {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+      }
+      .phase-label {
+        position: static;
+        top: auto;
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+      }
+      .phase-num {
+        font-size: clamp(1.75rem, 8vw, 2.25rem);
+        margin-bottom: 0;
+      }
+      .phase-name {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+      }
+      .phase-body h2 { font-size: 1.7rem; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 540px) {
+      .hero {
+        padding-top: calc(var(--nav-h) + 4rem);
+        padding-bottom: 4rem;
+      }
+      .hero-meta { gap: 1rem 1.5rem; }
+      .reflect-grid { grid-template-columns: 1fr; }
+      .embed-box { padding: 1.5rem; }
+    }
 
     /* ── FADE IN ──────────────────────────────── */
     .phase { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
