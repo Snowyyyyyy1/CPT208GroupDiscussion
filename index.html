@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Group Discussion — HCD Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FAFAF8;
+      --surface: #FFFFFF;
+      --ink:     #111110;
+      --muted:   #6B6B68;
+      --rule:    #E5E5E2;
+      --accent:  #0a84e8;        /* ← 改这里换强调色 */
+      --accent-light: #ebf9ff;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Plus Jakarta Sans', system-ui, sans-serif;
+      --radius:  12px;
+      --max-w:   900px;
+      --nav-h:   64px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(250,250,248,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      z-index: 100;
+      gap: 2rem;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--ink);
+      text-decoration: none;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--rule); }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      padding-top: calc(var(--nav-h) + 5rem);
+      padding-bottom: 5rem;
+      padding-left: clamp(1.5rem, 5vw, 4rem);
+      padding-right: clamp(1.5rem, 5vw, 4rem);
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.3rem 0.8rem; border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      font-size: 0.85rem;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .meta-label { font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.7rem; color: var(--muted); }
+    .meta-value { font-weight: 500; }
+
+    /* ── DIVIDER ──────────────────────────────── */
+    .section-divider {
+      width: 100%; max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .section-divider hr { border: none; border-top: 1px solid var(--rule); }
+
+    /* ── PHASE SECTION ────────────────────────── */
+    .phase {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4.5rem clamp(1.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+    }
+    @media (max-width: 680px) {
+      .phase { grid-template-columns: 1fr; gap: 1.5rem; }
+      .nav-links { display: none; }
+    }
+    .phase-label {
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+      align-self: start;
+    }
+    .phase-num {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--rule);
+      margin-bottom: 0.5rem;
+      user-select: none;
+    }
+    .phase-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .phase-body h2 {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+    .phase-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+    .phase-body p strong { color: var(--ink); font-weight: 600; }
+
+    /* ── CARD GRID ────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
+    .card-img {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--rule);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em;
+    }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 0.9rem 1rem; }
+    .card-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .card-desc { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── QUOTE ────────────────────────────────── */
+    .insight-quote {
+      border-left: 3px solid var(--accent);
+      background: var(--accent-light);
+      padding: 1rem 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.5rem 0;
+      font-style: italic;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+    }
+
+    /* ── TAG LIST ─────────────────────────────── */
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .tag {
+      font-size: 0.75rem; font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 99px;
+      color: var(--ink);
+    }
+
+    /* ── EMBED PLACEHOLDER ────────────────────── */
+    .embed-box {
+      margin-top: 1.75rem;
+      border: 2px dashed var(--rule);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .embed-box strong { display: block; margin-bottom: 0.25rem; color: var(--ink); font-size: 0.9rem; }
+    .embed-box iframe { width: 100%; border: none; border-radius: 8px; }
+
+    /* ── REFLECTION GRID ──────────────────────── */
+    .reflect-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 540px) { .reflect-grid { grid-template-columns: 1fr; } }
+    .reflect-item {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .reflect-item h4 {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .reflect-item p { font-size: 0.88rem; color: var(--muted); }
+
+    /* ── TEAM ─────────────────────────────────── */
+    .team-grid {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .team-card {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 0.75rem 1.1rem;
+    }
+    .team-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .team-name { font-weight: 600; font-size: 0.88rem; }
+    .team-role { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── FOOTER ───────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    footer strong { color: var(--ink); }
+
+    /* ── FADE IN ──────────────────────────────── */
+    .phase { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+    .phase.visible { opacity: 1; transform: none; }
+    .hero { animation: fadeUp 0.6s ease both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+  </style>
+</head>
+<body>
+
+  <!-- ╔══════════════════════════════════╗ -->
+  <!-- ║  NAV — Edit project name below   ║ -->
+  <!-- ╚══════════════════════════════════╝ -->
+  <nav>
+    <a class="nav-logo" href="#">Group Discussion · HCD</a>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#ideation">Ideation</a></li>
+      <li><a href="#prototype">Prototype</a></li>
+      <li><a href="#development">Development</a></li>
+      <li><a href="#testing">Testing</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+    </ul>
+  </nav>
+
+  <!-- ╔══════════════════════════════════╗ -->
+  <!-- ║  HERO — Edit your project intro  ║ -->
+  <!-- ╚══════════════════════════════════╝ -->
+  <header class="hero">
+    <div class="hero-tag">Human-Centric Design · Process Portfolio</div>
+    <h1>Rethinking <em>Group Discussion</em><br>for the Digital Age</h1>
+    <p class="hero-desc">
+      <!-- ✏️ One-line project description here -->
+      A design process documentation tracing how we identified friction in collaborative group discussions and crafted a web-based solution from research to reflection.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Course</span>
+        <!-- ✏️ Your course name -->
+        <span class="meta-value">CPT208 - Human-Centric Computing</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Team</span>
+        <!-- ✏️ Team name or number -->
+        <span class="meta-value">Group B1-2</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Topic</span>
+        <span class="meta-value">Group Discussion Tools</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 1 — RESEARCH                      ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="research" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">01</div>
+      <div class="phase-name">Research</div>
+    </div>
+    <div class="phase-body">
+      <h2>Understanding the Problem Space</h2>
+      <p>
+        <!-- ✏️ Describe your research goal and approach -->
+        We began by investigating how students and professionals experience group discussions — both in-person and online. Our goal was to uncover real pain points before designing any solution.
+      </p>
+      <p>
+        <strong>Methods used:</strong> User interviews (n=8), contextual observation, affinity mapping, and a competitive analysis of existing tools such as Google Meet, Miro, and Discord.
+      </p>
+
+      <!-- Key insights -->
+      <div class="insight-quote">
+        <!-- ✏️ A memorable quote from your research -->
+        "I always feel like the loudest person dominates — quiet members never get a real turn."
+        <span style="display:block; margin-top:0.5rem; font-size:0.8rem; font-style:normal; color:var(--muted); font-family:var(--sans);">— Interview participant, age 21</span>
+      </div>
+
+      <p><strong>Key insights discovered:</strong></p>
+      <div class="tag-list">
+        <!-- ✏️ Replace with your actual insights -->
+        <span class="tag">Unequal speaking time</span>
+        <span class="tag">No shared agenda</span>
+        <span class="tag">Action items lost post-meeting</span>
+        <span class="tag">Difficulty reaching consensus</span>
+        <span class="tag">Off-topic drift</span>
+      </div>
+
+      <!-- ✏️ Add your interview/research photos or affinity map here -->
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-img">[ Affinity Map ]</div>
+          <div class="card-body">
+            <div class="card-title">Affinity Map</div>
+            <div class="card-desc">Clustered 60+ observations into themes</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Interview Notes ]</div>
+          <div class="card-body">
+            <div class="card-title">Interview Synthesis</div>
+            <div class="card-desc">8 participants, 30–45 min each</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Competitive Analysis ]</div>
+          <div class="card-body">
+            <div class="card-title">Competitive Analysis</div>
+            <div class="card-desc">Gap mapping across 6 existing tools</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 2 — IDEATION                      ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="ideation" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">02</div>
+      <div class="phase-name">Ideation</div>
+    </div>
+    <div class="phase-body">
+      <h2>From Insights to Ideas</h2>
+      <p>
+        <!-- ✏️ Describe your ideation process -->
+        Armed with our research findings, we ran two brainstorming sessions using How Might We statements. We generated over 40 concepts across three HMW prompts, then used dot-voting to shortlist the most promising directions.
+      </p>
+      <p>
+        <strong>HMW Questions:</strong>
+      </p>
+      <div class="tag-list">
+        <!-- ✏️ Replace with your HMW statements -->
+        <span class="tag">HMW ensure everyone contributes equally?</span>
+        <span class="tag">HMW keep discussions on-track automatically?</span>
+        <span class="tag">HMW make consensus visible in real-time?</span>
+      </div>
+
+      <div class="card-grid" style="margin-top:1.75rem;">
+        <div class="card">
+          <div class="card-img">[ Sketch 1 ]</div>
+          <div class="card-body">
+            <div class="card-title">Round-Robin Mode</div>
+            <div class="card-desc">Enforced turn order with time limits</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Sketch 2 ]</div>
+          <div class="card-body">
+            <div class="card-title">Live Voting Board</div>
+            <div class="card-desc">Thumbs up/down per talking point</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Sketch 3 ]</div>
+          <div class="card-body">
+            <div class="card-title">AI Summary Panel</div>
+            <div class="card-desc">Auto-generated action items at close</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 3 — PROTOTYPE                     ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="prototype" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">03</div>
+      <div class="phase-name">Prototype</div>
+    </div>
+    <div class="phase-body">
+      <h2>Making It Tangible</h2>
+      <p>
+        <!-- ✏️ Describe your prototyping approach -->
+        We created a low-fidelity paper prototype first to validate the core flow, then moved to a mid-fidelity Figma prototype for usability testing. Key screens included the session lobby, the live discussion view, and the summary screen.
+      </p>
+
+      <!-- ✏️ Paste your Figma embed here — replace the div below with:
+           <iframe style="border:1px solid var(--rule); border-radius:8px; width:100%; height:450px;"
+             src="https://www.figma.com/embed?embed_host=share&url=YOUR_FIGMA_URL"
+             allowfullscreen></iframe>
+      -->
+      <div class="embed-box">
+        <strong>Figma Prototype Embed</strong>
+        Replace this block with your Figma embed code.<br/>
+        Share → Get embed code → paste the &lt;iframe&gt; here.
+      </div>
+
+      <div class="tag-list" style="margin-top:1.5rem;">
+        <span class="tag">Paper prototype (Lo-Fi)</span>
+        <span class="tag">Figma (Mid-Fi)</span>
+        <span class="tag">3 key screens</span>
+        <span class="tag">2 iteration rounds</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 4 — DEVELOPMENT                   ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="development" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">04</div>
+      <div class="phase-name">Development</div>
+    </div>
+    <div class="phase-body">
+      <h2>Building the Solution</h2>
+      <p>
+        <!-- ✏️ Describe your tech stack and what you built -->
+        We implemented a functional web prototype using React and Firebase Realtime Database, enabling multi-user synchronisation during live group sessions. The core feature set was scoped to the three highest-priority flows validated in testing.
+      </p>
+      <p>
+        <strong>Tech stack:</strong>
+      </p>
+      <div class="tag-list">
+        <!-- ✏️ Update with your actual stack -->
+        <span class="tag">React</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Vercel</span>
+      </div>
+
+      <div class="card-grid" style="margin-top:1.75rem;">
+        <div class="card">
+          <div class="card-img">[ Screenshot ]</div>
+          <div class="card-body">
+            <div class="card-title">Session Lobby</div>
+            <div class="card-desc">Create or join a discussion room</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Screenshot ]</div>
+          <div class="card-body">
+            <div class="card-title">Live Discussion View</div>
+            <div class="card-desc">Turn management + voting panel</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">[ Screenshot ]</div>
+          <div class="card-body">
+            <div class="card-title">Session Summary</div>
+            <div class="card-desc">Decisions + action items export</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 5 — TESTING                       ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="testing" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">05</div>
+      <div class="phase-name">Testing</div>
+    </div>
+    <div class="phase-body">
+      <h2>Validating with Real Users</h2>
+      <p>
+        <!-- ✏️ Describe your user testing methodology -->
+        We conducted two rounds of usability testing. Round 1 used think-aloud protocol with 5 participants on the Figma prototype. Round 2 tested the working build with 4 participants in a simulated group discussion scenario.
+      </p>
+
+      <div class="insight-quote">
+        <!-- ✏️ A memorable quote from testing -->
+        "The turn timer was a bit stressful at first — but once I got used to it, it actually felt fair."
+        <span style="display:block; margin-top:0.5rem; font-size:0.8rem; font-style:normal; color:var(--muted); font-family:var(--sans);">— Usability test participant, Round 2</span>
+      </div>
+
+      <p><strong>Key findings and changes made:</strong></p>
+      <div class="reflect-grid">
+        <div class="reflect-item">
+          <h4>Issue Found</h4>
+          <p>Timer countdown caused anxiety — users missed content while watching it.</p>
+        </div>
+        <div class="reflect-item">
+          <h4>Change Made</h4>
+          <p>Moved timer to a subtle progress bar instead of a large countdown number.</p>
+        </div>
+        <div class="reflect-item">
+          <h4>Issue Found</h4>
+          <p>Voting results were not visible until the end — felt disconnected.</p>
+        </div>
+        <div class="reflect-item">
+          <h4>Change Made</h4>
+          <p>Added real-time vote tallies visible to the facilitator during the session.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  PHASE 6 — REFLECTION                    ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section id="reflection" class="phase">
+    <div class="phase-label">
+      <div class="phase-num">06</div>
+      <div class="phase-name">Reflection</div>
+    </div>
+    <div class="phase-body">
+      <h2>What We Learned</h2>
+      <p>
+        <!-- ✏️ Your overall reflection on the HCD process -->
+        This project deepened our appreciation for the iterative nature of human-centric design. We entered with assumptions about what users needed — and research consistently challenged those assumptions in valuable ways.
+      </p>
+
+      <div class="reflect-grid">
+        <div class="reflect-item">
+          <h4>What Worked Well</h4>
+          <p>
+            <!-- ✏️ -->
+            Early low-fidelity prototyping saved significant development time by catching structural issues before any code was written.
+          </p>
+        </div>
+        <div class="reflect-item">
+          <h4>What We'd Do Differently</h4>
+          <p>
+            <!-- ✏️ -->
+            We'd recruit more diverse participants in research — our sample skewed toward CS students and may not represent all user groups.
+          </p>
+        </div>
+        <div class="reflect-item">
+          <h4>Biggest Surprise</h4>
+          <p>
+            <!-- ✏️ -->
+            Users cared far more about psychological safety in discussions than about efficiency — a dimension we hadn't initially considered.
+          </p>
+        </div>
+        <div class="reflect-item">
+          <h4>If We Had More Time</h4>
+          <p>
+            <!-- ✏️ -->
+            We'd explore AI-assisted facilitation and test whether automation of turn management feels empowering or controlling.
+          </p>
+        </div>
+      </div>
+
+      <!-- Team section -->
+      <h3 style="font-family:var(--serif); font-size:1.3rem; margin-top:2.5rem; margin-bottom:0.25rem;">The Team</h3>
+      <p style="color:var(--muted); font-size:0.9rem; margin-bottom:0;">
+        <!-- ✏️ Optional team description -->
+      </p>
+      <div class="team-grid">
+        <!-- ✏️ Replace with your team members. Avatar initials are auto-generated from name. -->
+        <div class="team-card">
+          <div class="team-avatar">YL</div>
+          <div>
+            <div class="team-name">Yuxuan Li</div>
+            <div class="team-role">Research &amp; Testing</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">MT</div>
+          <div>
+            <div class="team-name">Mengjia Tao
+            </div>
+            <div class="team-role">UI Design &amp; Prototype</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">ZC</div>
+          <div>
+            <div class="team-name">Zijun Chen</div>
+            <div class="team-role">Development</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">HG</div>
+          <div>
+            <div class="team-name">Hanqian Gao</div>
+            <div class="team-role">Ideation &amp; Content</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────── -->
+  <footer>
+    <span><strong>Group Discussion · HCD Portfolio</strong> &nbsp;·&nbsp; 2025</span>
+    <!-- ✏️ Replace with your GitHub repo URL -->
+    <a href="https://Snowyyyyyy1.github.io/CPT208GroupDiscussion/" style="color:var(--muted); text-decoration:none; font-size:0.8rem;">
+      View on GitHub ↗
+    </a>
+  </footer>
+
+  <script>
+    // Intersection observer — fade in phases on scroll
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.phase').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
